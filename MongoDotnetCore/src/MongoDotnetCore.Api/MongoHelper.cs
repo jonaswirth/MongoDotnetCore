@@ -33,6 +33,13 @@ namespace MongoDotnetCore.Api
             collection.InsertOne(doc);
         }
 
+        internal void InsertTestObject2()
+        {
+            var doc = new BsonDocument(new TestObject2().ToBsonDocument());
+            var collection = _database.GetCollection<BsonDocument>("collection2");
+            collection.InsertOne(doc);
+        }
+
         internal string SelectAll(string col)
         {
             var collection = _database.GetCollection<BsonDocument>(col);

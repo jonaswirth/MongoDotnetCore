@@ -50,11 +50,20 @@ namespace MongoDotnetCore.Api.Controllers
 
         // POST api/test/insert/testObject1
         [HttpPost("insert/testObject1")]
-        public void Post()
+        public void CreateObject1()
         {
             using (MongoHelper mongo = new MongoHelper())
             {
                 mongo.InsertTestObject1();
+            }
+        }
+        // POST api/test/insert/testObject2
+        [HttpPost("insert/testObject2")]
+        public void CreateObject2()
+        {
+            using (MongoHelper mongo = new MongoHelper())
+            {
+                mongo.InsertTestObject2();
             }
         }
 

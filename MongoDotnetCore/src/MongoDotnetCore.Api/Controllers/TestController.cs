@@ -3,53 +3,73 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace MongoDotnetCore.Api.Controllers
 {
     [Route("api/[controller]")]
     public class TestController : Controller
     {
-        // GET api/
+        // GET api/test
         [HttpGet]
-        public IEnumerable<string> Get()
+        public string Get()
         {
-            return new string[] { "value1", "value2" };
+            return "Read the documentation on github if you don't know what to do.";
         }
 
 
-        //GET api/test/count/restaurant
+        //GET api/test/count/collection1
         [HttpGet("count/{collection}")]
         public long CountCollection(string collection)
         {
-            using(MongoHelper mongo = new MongoHelper())
+            using (MongoHelper mongo = new MongoHelper())
             {
                 return mongo.SelectCount(collection);
             }
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        //GET api/test/select/collection1
+        [HttpGet("select/{collection}")]
+        public string SelectAll(string collection)
         {
-            return "value";
+            using (MongoHelper mongo = new MongoHelper())
+            {
+                return mongo.SelectAll(collection);
+            }
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
+        // GET api/test/select/collection1/582866814d8a102a38716a9d
+        [HttpGet("select/{collection}/{id}")]
+        public string Get(string collection, string id)
         {
+            using(MongoHelper mongo = new MongoHelper())
+            {
+                return mongo.SelectById(collection, id);
+            }
         }
 
-        // PUT api/values/5
+        // POST api/test/insert/testObject1
+        [HttpPost("insert/testObject1")]
+        public void Post()
+        {
+            using (MongoHelper mongo = new MongoHelper())
+            {
+                mongo.InsertTestObject1();
+            }
+        }
+
+        // PUT api/test/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
+            throw new NotImplementedException();
         }
 
-        // DELETE api/values/5
+        // DELETE api/test/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            throw new NotImplementedException();
         }
     }
 }

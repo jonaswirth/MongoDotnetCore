@@ -7,13 +7,24 @@ using Microsoft.AspNetCore.Mvc;
 namespace MongoDotnetCore.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class TestController : Controller
     {
-        // GET api/values
+        // GET api/
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
+        }
+
+
+        //GET api/test/count/restaurant
+        [HttpGet("count/{collection}")]
+        public long CountCollection(string collection)
+        {
+            using(MongoHelper mongo = new MongoHelper())
+            {
+                return mongo.SelectCount(collection);
+            }
         }
 
         // GET api/values/5

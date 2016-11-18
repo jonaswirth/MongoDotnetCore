@@ -7,8 +7,8 @@ namespace MongoDotnetCore.Api.Models
 {
     public class ChildObject
     {
-        public int Int;
-        public string Str;
+        public int Int { get; set; }
+        public string Str { get; set; }
 
         public ChildObject()
         {

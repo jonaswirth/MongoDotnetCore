@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDotnetCore.Api.Models;
+using Newtonsoft.Json;
 
 namespace MongoDotnetCore.Api
 {
@@ -38,6 +39,22 @@ namespace MongoDotnetCore.Api
             var doc = new BsonDocument(new TestObject2().ToBsonDocument());
             var collection = _database.GetCollection<BsonDocument>("collection2");
             collection.InsertOne(doc);
+        }
+
+        internal bool UpdateObject(string id,ChildObject[] newChildObjects)
+        {
+            try
+            {
+                var collection = _database.GetCollection<BsonDocument>("collection2");
+                var filter = Builders<BsonDocument>.Filter.Eq("_id", ObjectId.Parse(id));
+                var update = Builders<BsonDocument>.Update.PushEach("Array", newChildObjects);
+                collection.FindOneAndUpdate<BsonDocument>(filter, update);
+                return true;
+            }
+            catch(Exception ex)
+            {
+              return false;
+            }
         }
 
         internal string SelectAll(string col)

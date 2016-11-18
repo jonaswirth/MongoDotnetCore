@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
+using MongoDotnetCore.Api.Models;
 
 namespace MongoDotnetCore.Api.Controllers
 {
@@ -68,10 +69,13 @@ namespace MongoDotnetCore.Api.Controllers
         }
 
         // PUT api/test/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPut("update/{id}")]
+        public void Put(string id, [FromBody]ChildObject[] value)
         {
-            throw new NotImplementedException();
+            using(MongoHelper mongo = new MongoHelper())
+            {
+                mongo.UpdateObject(id, value);
+            }
         }
 
         // DELETE api/test/5
